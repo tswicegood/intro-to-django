@@ -1,0 +1,5 @@
+<ul>
+{% for person in object_list %}
+  <li><a href="{% url "person" pk=person.pk %}">{{ person }}</a></li>
+{% endfor %}
+</ul>
