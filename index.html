@@ -1,0 +1,756 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>Intro to Django</title>
+
+    <meta name="description" content="A talk introducing you to Django">
+    <meta name="author" content="Travis Swicegood">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <link rel="stylesheet" href="css/reveal.min.css">
+    <link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+    <script>
+      document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+
+        <section>
+          <h1>Introduction to Django</h1>
+          <h3>For Perfectionists with Deadlines</h3>
+          <p>
+            <small>A talk by <a href="http://travisswicegod.com">Travis Swicegood</a> / <a href="http://twitter.com/tswicegood">@tswicegood</a> / <a href="https://twitter.com/search/realtime?q=%djintro">#djintro</a>
+            </small>
+          </p>
+        </section>
+
+        <section>
+          <section>
+            <h1>House Keeping</h1>
+          </section>
+
+          <section>
+            <h2>Questions: Ask Them</h2>
+          </section>
+
+          <section>
+            <h2>Twitter!</h2>
+            <h3>
+              <a href="http://twitter.com/tswicegood">@tswicegood</a> |
+              <a href="https://twitter.com/search/realtime?q=%23djintro">#djintro</a>
+            </h3>
+          </section>
+
+          <section>
+            <h2>Slides are Online</h2>
+            <p>Link at the end, so hold your horses</p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>About Me</h1>
+          </section>
+
+          <section>
+            <h2>Texas Tribune</h2>
+
+            <img src="./images/txtrib.png" style="width:254px; margin: 1em auto; border: 0; background: #000;">
+
+            <aside class="notes">
+              I am the Director of Technology at the Texas Tribune.  We use
+              Django for almost all of our web infrastructure.  It's a quick way
+              to have a shared vocabulary for building out features on our website
+              and it does pretty much everything we need.  The best part, we can
+              remove pieces as needed when we get to that point!
+            </aside>
+          </section>
+
+          <section>
+            <h2>I <em>All</em> Hate Software</h2>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>What Is It?</h1>
+          </section>
+
+          <section>
+            <h2>Rapid Application Development Framework</h2>
+
+            <aside class="notes">
+              Build things quickly.  It's like Rails, or Symfony, or any of the
+              other frameworks.  It makes a bunch of assumptions and if you
+              follow those, you can do some things blazingly fast.
+            </aside>
+          </section>
+
+          <section>
+            <h2>Provides a Vocabulary</h2>
+
+            <aside class="notes">
+              <p>
+                This applies to all frameworks.  Having a shared vocabulary for
+                building tools scales your team.  How do you connect to the
+                database?  There's only one way.  Want to model a table in the
+                database, same thing.  How do you execute code in response to
+                a request?  Using the built-in views.
+              </p>
+
+              <p>
+                Note, this isn't just Django.  All frameworks do this, I just
+                think Django happens to do it exceptionally well.  One of those
+                reasons is because…
+              </p>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Opiniated, but…</h2>
+
+            <aside class="notes">
+              <p>
+                Many RAD frameworks assume that you're only going to do things the
+                one-true-way.  That means that you're out of luck as soon as you
+                deviate from that path.  Django doesn't force your hand.
+              </p>
+
+              <p>
+                One of the ways I rate a framework (and a language) is how
+                easily it gets out of my way when I need it to stop helping me.
+                Invariably I want to do something different.  Can I without having
+                to recreate whole parts of the site?  With Django, yes.
+              </p>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Scalable</h2>
+
+            <aside class="notes">
+              Mozilla uses it all over the place.  They left PHP for Django
+              actually.  There's also this tiny site that handles commenting,
+              Disqus.
+            </aside>
+          </section>
+
+          <section data-state="soothe">
+            <h2>Questions?</h2>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Glossary</h1>
+          </section>
+
+          <section>
+            <h2>Settings</h2>
+
+            <aside class="notes">
+              This provides all configuration.  If I had to point out one big
+              problem with Django, this is it.  It's global so there's only ever
+              one settings running for a given process.  It's workable, but not
+              ideal.
+            </aside>
+          </section>
+
+          <section>
+            <h2>Router</h2>
+
+            <aside class="notes">
+              <p>
+                Routing takes a given URL and maps it to a some sort of
+                invokable function.  It uses regular expression patterns to
+                do this, so you can match a pattern to a handler and extract
+                variables from the URLs.
+              </p>
+
+              <p>
+                Apache handles this by mapping a URL to a file on the file
+                system.  PHP takes advantage of that by mapping the code to a
+                given file and executing that file (or using some mod_rewrite
+                magic to do that).
+              </p>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Models via ORM</h2>
+
+            <aside class="notes">
+            </aside>
+          </section>
+
+          <section>
+            <h2>Templating</h2>
+          </section>
+
+          <section>
+            <h2>… and so much more</h2>
+
+            <aside class="notes">
+            </aside>
+          </section>
+
+          <section data-state="soothe">
+            <h2>Questions?</h2>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>How it Works</h1>
+          </section>
+
+          <section>
+            <h2>Executing Code</h2>
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>WSGI</h2>
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>Production Deployment</h2>
+            <aside class="notes"></aside>
+          </section>
+
+          <section>
+            <h2>Projects &amp; Apps</h2>
+            <aside class="notes"></aside>
+          </section>
+
+          <section data-state="soothe">
+            <h2>Questions?</h2>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Settings</h1>
+          </section>
+
+          <section>
+            <h2>All the Wires</h2>
+          </section>
+
+          <section>
+            <h2>Kinda Awful</h2>
+          </section>
+
+          <section>
+            <h2>Kinda Awesome</h2>
+          </section>
+
+          <section>
+            <h2>Required Bits</h2>
+
+            <ul>
+              <li>Database Config</li>
+              <li>Installed Apps</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Database Config</h2>
+
+            <pre><code data-trim>
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': './project.db',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
+    }
+}
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Installed Apps</h2>
+
+            <pre><code data-trim>
+INSTALLED_APPS = [
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+
+    # ... and so on
+    'your_app',
+    'third_party_app',
+]
+            </code></pre>
+          </section>
+
+          <section data-state="soothe">
+            <h2>Questions?</h2>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Models</h1>
+          </section>
+
+          <section>
+            <h2>Simple Person</h2>
+
+            <pre><code>
+from django.db import models
+
+
+class Person(models.Model):
+    name = models.CharField(max_length=250)
+    language = models.CharField(max_length=2)
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Creating a Model</h2>
+
+            <pre><code data-trim>
+$ python manage.py shell
+Python 2.7.3 (default, Apr 20 2012, 18:35:54)
+[GCC 4.2.1 Compatible Apple Clang 3.1 (tags/Apple/clang-318.0.58)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from people.models import Person
+>>> t = Person.objects.create(name='Travis Swicegood', language='en')
+>>> t.name
+'Travis Swicegood'
+>>> t
+&lt;Person: Person object>
+>>>
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Better Representation</h2>
+
+            <pre><code>
+class Person(models.Model):
+    name = models.CharField(max_length=250)
+    language = models.CharField(max_length=2)
+
+    def __unicode__(self):
+        return self.name
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Getting a Person</h2>
+            <pre><code data-trim>
+>>> from people.models import Person
+>>> t = Person.objects.get(name='Travis Swicegood')
+>>> t
+&lt;Person: Travis Swicegood>
+>>>
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Finding a Person</h2>
+
+            <pre><code data-trim>
+>>> Person.objects.filter(name='Travis Swicegood')
+[&lt;Person: Travis Swicegood>]
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Without Relationships</h2>
+
+            <pre><code data-trim>
+class Person(models.Model):
+    name = models.CharField(max_length=250)
+    language = models.CharField(max_length=2)
+
+    def __unicode__(self):
+        return self.name
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Handling Relationships</h2>
+
+            <pre><code data-trim>
+class Language(models.Model):
+    name = models.CharField(max_length=250)
+    code = models.CharField(max_length=2)
+
+    def __unicode__(self):
+        return u'%s (%s)' % (self.name, self.code)
+
+
+class Person(models.Model):
+    name = models.CharField(max_length=250)
+    language = models.ForeignKey(Language, related_name='people')
+
+    def __unicode__(self):
+        return self.name
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Relationships in the Shell</h2>
+
+            <pre><code data-trim>
+>>> from people.models import *
+>>> en = Language.objects.create(name='English', code='en')
+>>> en
+&lt;Language: English (en)>
+>>> t = Person.objects.create(name='Travis Swicegood', language=en)
+>>> t
+&lt;Person: Travis Swicegood>
+>>> t.language
+&lt;Language: English (en)>
+>>>
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Handling Reverse</h2>
+
+            <pre><code data-trim>
+  >>> en.people.all()
+  [&lt;Person: Travis Swicegood>]
+  >>> en.people.get(name='Travis Swicegood') == t
+  True
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>But Wait!</h2>
+            <h3>There's More!</h3>
+
+            <aside class="notes">
+              <p>
+                There are other types of relationships (one-to-one, many-to-many,
+                generic, and so on) and a ton of other fields.  And you can create
+                your own fields as well!
+              </p>
+
+              <p>
+                For example, I created an AuthorsField in Armstrong that is a
+                custom many-to-many that allows overriding or adding extra info
+                on the fly.  Oh, and you can render it with my_model.authors.html().
+              </p>
+            </aside>
+          </section>
+
+          <section data-state="soothe">
+            <h2>Questions?</h2>
+          </section>
+
+        </section>
+
+        <section>
+          <section>
+            <h1>Admin</h1>
+
+            <aside class="notes">
+              Django's admin is one of its coolest features.  It wrap any kind of
+              model and expose an admin interface that a normal user can use.
+            </aside>
+          </section>
+
+          <section>
+            <h2><code>INSTALLED_APPS</code></h2>
+
+            <pre><code>
+# Uncomment the next line to enable the admin:
+'django.contrib.admin',
+            </code></pre>
+          </section>
+
+          <section>
+            <h2><code>urls.py</code></h2>
+
+            <pre><code>
+# Uncomment the next two lines to enable the admin:
+from django.contrib import admin
+admin.autodiscover()
+
+# ... further down the file
+
+# Uncomment the next line to enable the admin:
+url(r'^admin/', include(admin.site.urls)),
+            </code></pre>
+          </section>
+
+          <section>
+            <h2><code>people.admin</code></h2>
+
+            <pre><code>
+from django.contrib import admin
+
+from . import models
+
+admin.site.register(models.Language)
+admin.site.register(models.Person)
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Demo Time!</h2>
+          </section>
+
+          <section data-state="alert">
+            <h2>Remember!</h2>
+            <h3>Admin != Your App</h3>
+          </section>
+
+          <section data-state="soothe">
+            <h2>Questions?</h2>
+          </section>
+
+        </section>
+
+        <section>
+          <section>
+            <h1>Routing, Views, &amp; Templates</h1>
+          </section>
+
+          <section>
+            <h2>Routing</h2>
+
+            <aside class="notes">
+              This is what takes a URL and turns it into
+            </aside>
+          </section>
+
+          <section>
+            <h2>Project Routes</h2>
+
+            <pre><code data-trim>
+from django.conf.urls import patterns, include, url
+
+# Uncomment the next two lines to enable the admin:
+from django.contrib import admin
+admin.autodiscover()
+
+urlpatterns = patterns('',
+    # Uncomment the next line to enable the admin:
+    url(r'^admin/', include(admin.site.urls)),
+
+    url('person/', include('people.urls')),
+)
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>App Routes</h2>
+
+            <pre><code data-trim>
+from django.conf.urls import patterns, url
+
+from . import views
+
+urlpatterns = patterns('',
+    url(r'^$', views.PeopleListView.as_view(), name="people_list"),
+    url(r'^(?P<pk>[0-9]+)/$', views.PersonView.as_view(), name="person"),
+)
+            </code></pre>
+
+            <aside class="notes">
+              Note the name at the end.  Those'll come back in a few.
+            </aside>
+          </section>
+
+          <section>
+            <h2>Views</h2>
+
+            <aside class="notes">
+              <p>
+                Any function will do.  That used to be all Django did and you had
+                to roll your own if you wanted to do anything more interesting.
+                This made for bad code.
+              </p>
+            </aside>
+          </section>
+
+          <section>
+            <h2>Class Based Views</h2>
+            <h3>CBVs</h3>
+
+            <aside class="notes">
+              Enter class-based views.  These provide some generic code that if
+              you follow the correct pattern, you get amazingly efficient code.
+            </aside>
+          </section>
+
+          <section>
+            <h2>Example Views</h2>
+
+            <pre><code data-trim>
+from django.views.generic import DetailView, ListView
+
+from . import models
+
+
+class PeopleListView(ListView):
+    model = models.Person
+
+
+class PersonView(DetailView):
+    model = models.Person
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Seriously…</h2>
+          </section>
+
+          <section>
+            <h2>Templates</h2>
+
+            <aside class="notes">
+              These are gonna seem really familiar to PHP developers.  They're
+              modeled after Smarty!
+            </aside>
+          </section>
+
+          <section>
+            <h2>Templates and CBVs</h2>
+
+            <pre class="fragment"><code data-trim>
+{{ app_name }}/{{ model_name }}_detail.html
+{{ app_name }}/{{ model_name }}_list.html
+            </code></pre>
+
+            <pre class="fragment"><code data-trim>
+people/person_detail.html
+people/person_list.html
+            </code></pre>
+          </section>
+
+          <section>
+            <h2><code>person_detail.html</code></h2>
+
+            <pre><code data-trim>
+&lt;dl>
+  &lt;dt>Name&lt;/dt>
+  &lt;dd>{{ object.name }}&lt;/dd>
+
+  &lt;dt>Language&lt;/dt>
+  &lt;dd>{{ object.language }}&lt;/dd>
+&lt;/dl>
+            </code></pre>
+          </section>
+
+          <section>
+            <h2><code>person_list.html</code></h2>
+
+            <pre><code data-trim>
+&lt;ul>
+{% for person in object_list %}
+  &lt;li>&lt;a href="{% url "person" pk=person.pk %}">{{ person }}&lt;/a>&lt;/li>
+{% endfor %}
+&lt;/ul>
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>So much more…</h2>
+          </section>
+
+          <section data-state="soothe">
+            <h2>Questions?</h2>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h1>Ecosystem</h1>
+          </section>
+
+          <section>
+            <h2>Third Party</h2>
+            <ul>
+              <li class="fragment">API: Tastypie</li>
+              <li class="fragment">Search: Haystack</li>
+              <li class="fragment">Queue: Celery</li>
+              <li class="fragment">Features: Reusable Apps</li>
+          </section>
+        </section>
+
+        <section>
+          <h1>Questions?</h1>
+          <h4>
+            <a href="http://twitter.com/tswicegood">@tswicegood</a> |
+            <a href="https://twitter.com/search/realtime?q=%23djintro">#djintro</a>
+          </h4>
+
+          <h4>
+            <a href="http://tswicegood.github.io/intro-to-django/">
+              tswicegood.github.io/intro-to-django/
+            </a>
+          </h4>
+
+        </section>
+      </div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        theme: 'night', // available themes are in /css/theme
+        transition: 'zoom', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+          // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+
+          // allow remote notes
+          { src: 'socket.io/socket.io.js', async: true },
+          { src: 'plugin/notes-server/client.js', async: true }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>
